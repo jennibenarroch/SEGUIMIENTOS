@@ -70,6 +70,20 @@ src/
 - Toda propuesta/material enviado debe ir con **link de tracking**
 - Idioma: español para Latinoamérica, inglés para Caribe anglófono (Barbados, Jamaica, Trinidad, etc.)
 
+## Convención de Ramas
+
+Este proyecto tiene **solo dos ramas**. No crear ninguna otra salvo que la usuaria lo pida explícitamente.
+
+| Rama | Propósito | Alias reconocidos |
+|------|-----------|-------------------|
+| `main` | Producción — lo que los usuarios ven online | "producción", "prod", "main", "online", "la web", "publicar", "subir a producción", "lo que los usuarios van a ver" |
+| `staging` | Desarrollo — donde se prueban los cambios antes de publicar | "desarrollo", "development", "dev", "staging", "ambiente de prueba", "entorno de pruebas" |
+
+**Reglas por defecto:**
+- Todos los commits van en `staging`.
+- Solo mergeamos `staging → main` cuando algo está listo para publicar.
+- Si la usuaria pide crear una rama para una funcionalidad concreta, crearla a partir de `staging`, no de `main`.
+
 ## Workflow
 
 - Explorar archivos relevantes antes de implementar; usar plan mode para cambios multi-archivo
