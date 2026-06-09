@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { ArrowLeft, Search, AlertCircle, ExternalLink, RefreshCw, Send, X, CheckCircle, SendHorizonal, Sparkles, Mail, ChevronDown, ChevronUp } from "lucide-react";
 import type { Prospect } from "./page";
 
@@ -488,6 +488,54 @@ function EmailModal({
   );
 }
 
+// ── Toast de contacto efectivo ──────────────────────────────────────────────
+
+type Toast = {
+  key:       number;
+  id:        string;
+  name:      string;
+  seller:    string;
+  mondayUrl: string;
+};
+
+const POLL_MS = 45_000;
+const LS_KEY  = "salesai_notified_efectivos";
+
+function NotificationToast({ toast, onClose }: { toast: Toast; onClose: () => void }) {
+  return (
+    <div className="w-80 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl overflow-hidden pointer-events-auto">
+      <div className="h-1 bg-green-500 w-full" />
+      <div className="flex items-start gap-3 p-4">
+        <div className="w-9 h-9 rounded-full bg-green-500/20 border border-green-500/30 flex items-center justify-center flex-shrink-0 mt-0.5">
+          <CheckCircle className="w-5 h-5 text-green-400" />
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="text-green-400 text-xs font-semibold uppercase tracking-wide">Contacto efectivo</p>
+          <p className="text-white text-sm font-medium mt-0.5 truncate">{toast.name}</p>
+          {toast.seller && (
+            <p className="text-slate-500 text-xs mt-0.5">Vendedor: {toast.seller}</p>
+          )}
+          <a
+            href={toast.mondayUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1 text-green-400 hover:text-green-300 text-xs font-medium mt-2 transition-colors"
+          >
+            Ver respuesta en Monday
+            <ExternalLink className="w-3 h-3" />
+          </a>
+        </div>
+        <button
+          onClick={onClose}
+          className="text-slate-500 hover:text-white transition-colors flex-shrink-0"
+        >
+          <X className="w-4 h-4" />
+        </button>
+      </div>
+    </div>
+  );
+}
+
 // ── Panel de cuota semanal por país ─────────────────────────────────────────
 
 const QUOTA_PER_COUNTRY = 10;
@@ -604,7 +652,63 @@ export default function ProspeccionClient({ prospects, error, boardId }: Props) 
   const [emailModal, setEmailModal] = useState<EmailModalState>(null);
   const [bulkOpen, setBulkOpen] = useState(false);
   // { id → fecha enviado } para esta sesión
-  const [sent, setSent] = useState<Record<string, string>>({});
+  const [sent,   setSent]   = useState<Record<string, string>>({});
+  const [toasts, setToasts] = useState<Toast[]>([]);
+  const knownRef    = useRef<Set<string>>(new Set());
+  const toastKeyRef = useRef(0);
+
+  // Polling: detecta nuevos "contacto efectivo" y lanza notificación
+  useEffect(() => {
+    // Inicializar IDs conocidos: localStorage + los que ya están en pantalla
+    const stored  = JSON.parse(localStorage.getItem(LS_KEY) ?? "[]") as string[];
+    const initial = prospects
+      .filter((p) => p.status.toLowerCase() === "contacto efectivo")
+      .map((p) => p.id);
+    const known = new Set([...stored, ...initial]);
+    knownRef.current = known;
+    localStorage.setItem(LS_KEY, JSON.stringify([...known]));
+
+    // Pedir permiso de notificaciones del navegador
+    if ("Notification" in window && Notification.permission === "default") {
+      Notification.requestPermission();
+    }
+
+    async function poll() {
+      try {
+        const res = await fetch("/api/monday/check-efectivos");
+        if (!res.ok) return;
+        const items = (await res.json()) as { id: string; name: string; seller: string }[];
+
+        for (const item of items) {
+          if (knownRef.current.has(item.id)) continue;
+          knownRef.current.add(item.id);
+          localStorage.setItem(LS_KEY, JSON.stringify([...knownRef.current]));
+
+          const mondayUrl = `https://sicobenediciones.monday.com/boards/${boardId}/items/${item.id}`;
+
+          // Notificación del navegador (estilo WhatsApp)
+          if ("Notification" in window && Notification.permission === "granted") {
+            new Notification("Contacto Efectivo ✅", {
+              body: `${item.name}${item.seller ? ` · Vendedor: ${item.seller}` : ""}`,
+              icon: "/favicon.ico",
+              tag: `ef-${item.id}`,
+            });
+          }
+
+          // Toast in-app
+          const key = ++toastKeyRef.current;
+          setToasts((prev) => [...prev, { key, id: item.id, name: item.name, seller: item.seller, mondayUrl }]);
+          setTimeout(() => setToasts((prev) => prev.filter((t) => t.key !== key)), 8000);
+        }
+      } catch {
+        // Ignorar errores de polling silenciosamente
+      }
+    }
+
+    const timer = setInterval(poll, POLL_MS);
+    return () => clearInterval(timer);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const statuses = useMemo(() => {
     const s = new Set(prospects.map((p) => p.status).filter(Boolean));
@@ -886,6 +990,17 @@ export default function ProspeccionClient({ prospects, error, boardId }: Props) 
             </div>
           )}
         </main>
+      </div>
+
+      {/* Toast stack — esquina inferior derecha, sobre todos los modales */}
+      <div className="fixed bottom-6 right-6 z-[60] flex flex-col gap-3 pointer-events-none">
+        {toasts.map((t) => (
+          <NotificationToast
+            key={t.key}
+            toast={t}
+            onClose={() => setToasts((prev) => prev.filter((x) => x.key !== t.key))}
+          />
+        ))}
       </div>
     </>
   );
