@@ -1,4 +1,5 @@
 import { getDeals, dealCol, type DealItem } from "@/lib/monday-deals";
+import { MOCK_DEALS } from "@/lib/mock-data";
 import SeguimientoClient from "./SeguimientoClient";
 
 export const dynamic = "force-dynamic";
@@ -59,11 +60,15 @@ export default async function SeguimientoPage() {
   let deals: Deal[] = [];
   let error = "";
 
-  try {
-    const items = await getDeals();
-    deals = items.map(toDeal);
-  } catch (e) {
-    error = e instanceof Error ? e.message : "Error desconocido";
+  if (process.env.NEXT_PUBLIC_USE_MOCK === "true") {
+    deals = MOCK_DEALS;
+  } else {
+    try {
+      const items = await getDeals();
+      deals = items.map(toDeal);
+    } catch (e) {
+      error = e instanceof Error ? e.message : "Error desconocido";
+    }
   }
 
   return (

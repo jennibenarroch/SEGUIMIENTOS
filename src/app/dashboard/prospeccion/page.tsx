@@ -1,4 +1,5 @@
 import { getProspects, col, type MondayItem } from "@/lib/monday-prospects";
+import { MOCK_PROSPECTS } from "@/lib/mock-data";
 import ProspeccionClient from "./ProspeccionClient";
 
 export const dynamic = "force-dynamic";
@@ -60,11 +61,15 @@ export default async function ProspeccionPage() {
   let prospects: Prospect[] = [];
   let error = "";
 
-  try {
-    const items = await getProspects();
-    prospects = items.map(toProspect);
-  } catch (e) {
-    error = e instanceof Error ? e.message : "Error desconocido";
+  if (process.env.NEXT_PUBLIC_USE_MOCK === "true") {
+    prospects = MOCK_PROSPECTS;
+  } else {
+    try {
+      const items = await getProspects();
+      prospects = items.map(toProspect);
+    } catch (e) {
+      error = e instanceof Error ? e.message : "Error desconocido";
+    }
   }
 
   return (
