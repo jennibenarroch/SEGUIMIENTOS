@@ -825,9 +825,21 @@ export default function ProspeccionClient({ prospects, error, boardId }: Props) 
                         <td className="px-5 py-3.5 text-slate-400 text-xs hidden sm:table-cell">{p.country || "—"}</td>
                         <td className="px-5 py-3.5 hidden md:table-cell">
                           {p.status ? (
-                            <span className={`inline-block text-xs font-medium px-2.5 py-1 rounded-full ${statusColor(p.status)}`}>
-                              {p.status}
-                            </span>
+                            p.status.toLowerCase() === "contacto efectivo" ? (
+                              <a
+                                href={`https://sicobenediciones.monday.com/boards/${boardId}/items/${p.id}`}
+                                target="_blank"
+                                rel="noreferrer"
+                                className={`inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-full ${statusColor(p.status)} hover:ring-1 hover:ring-green-400/40 transition-all`}
+                              >
+                                {p.status}
+                                <ExternalLink className="w-3 h-3 opacity-70" />
+                              </a>
+                            ) : (
+                              <span className={`inline-block text-xs font-medium px-2.5 py-1 rounded-full ${statusColor(p.status)}`}>
+                                {p.status}
+                              </span>
+                            )
                           ) : <span className="text-slate-600 text-xs">—</span>}
                         </td>
                         <td className="px-5 py-3.5 text-slate-400 text-xs hidden lg:table-cell">{p.seller || "—"}</td>
