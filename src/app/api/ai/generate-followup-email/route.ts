@@ -12,7 +12,15 @@ export async function POST(req: Request) {
   }
 
   try {
-    const { deal, vendorName } = await req.json() as {
+    const { deal, vendorName, channel = "email", strategy } = await req.json() as {
+      channel?: "email" | "whatsapp";
+      vendorName?: string;
+      strategy?: {
+        titulo: string;
+        hipotesis: string;
+        enfoque: string;
+        puntosClave: string[];
+      };
       deal: {
         name: string;
         country?: string;
@@ -31,7 +39,6 @@ export async function POST(req: Request) {
         ideaLicenses?: string[];
         ideaArgument?: string;
       };
-      vendorName?: string;
     };
 
     const anthropic = new Anthropic({ apiKey });
@@ -75,21 +82,37 @@ export async function POST(req: Request) {
       prioridad = `Mantén la relación con un mensaje corto y relevante. Pregunta por el estado de la mercancía (rotación, inventario, exhibición). Si hay temporada activa o próxima, úsala para abrir la conversación sobre el siguiente pedido.`;
     }
 
-    const prompt = `Eres un experto en ventas B2B para Sicoben Ediciones. A continuación tienes el contexto completo de la empresa.
+    const isWhatsapp = channel === "whatsapp";
+
+    const prompt = `Eres un vendedor B2B de Sicoben Ediciones escribiendo directamente a un cliente o prospecto. Conoces la empresa a fondo y escribes como alguien de adentro — con naturalidad, calidez y confianza en el producto.
 
 SOBRE SICOBEN EDICIONES:
-Sicoben Ediciones es una editorial y distribuidora de libros y productos infantiles educativos y de entretenimiento con más de 62 años de experiencia. Opera en 15 países de América Latina y el Caribe, vende millones de libros al año y lanza 200 títulos nuevos anualmente.
+Somos una empresa familiar con más de 60 años de trayectoria. Operamos en 15 países de América Latina y el Caribe, atendiendo a distribuidores y retailers. Todos los pedidos se despachan desde la Zona Libre de Colón en Panamá — un hub logístico clave en América Latina que garantiza rapidez y eficiencia. Ofrecemos soluciones personalizadas a medida según las necesidades de cada cliente. Cada año lanzamos cientos de productos nuevos en diversos formatos y diseños.
 
-MARCAS Y LICENCIAS:
+PROPÓSITO DE MARCA:
+Somos creadores de ideas y recursos para transformar la curiosidad en descubrimiento. Un puente para enriquecer la conexión entre adultos y niños. Creemos que la educación debe ser divertida y que los valores y la magia caben en la misma mesa. "Porque en la aventura de crecer todos somos protagonistas."
+
+MARCA PROPIA Y LICENCIAS:
+- Marca exclusiva Sicoben: libros educativos y de entretenimiento con diseños originales, alta rotación
 - Disney: Princesas, Stitch, Rey León, Disney Junior
 - Mattel: Barbie, Hot Wheels, Fisher-Price
-- Nickelodeon: Paw Patrol (licencia #1 en preescolar 3 años consecutivos)
+- Nickelodeon: Paw Patrol, Bob Esponja
 - BBC Studios: Bluey (licencia en rápido crecimiento)
-- Universal: Gabby's Dollhouse, Minions, Cómo Entrenar a Tu Dragón
-- Marca propia Sicoben: libros educativos y entretenidos para alta rotación
+- Universal: Gabby's Dollhouse, Minions, Cómo Entrenar a Tu Dragón, Trolls
 
-SOLUCIONES DE EXHIBICIÓN:
-Pallet Display, Exhibidor de Piso, Exhibidor Colgante, Self PDQ, PDQ, Ristras — adaptables a cualquier espacio.
+CATEGORÍAS DE PRODUCTOS:
+- ACTIVIDAD: Especializada en aprendizaje activo. Fortalece psicomotricidad fina, matemáticas y caligrafía. Introduce números, letras, colores y formas. Incluye stickers. Libros de 16 a 48 páginas. "Diversión garantizada, aprendizaje asegurado."
+- LECTURA: Desarrollo lector infantil. Textos breves para primeros lectores e historias largas para lectores avanzados. Tapa dura y blanda. Disponibles en español e inglés.
+- COLOREAR: Libros de 16 a 80 páginas. Variedad de formatos, algunos con stickers. Temáticas amplias y licencias populares. "El formato ideal para explorar, aprender y disfrutar coloreando sin límites."
+- PACKS: Combinación de libro de colorear o actividades + complemento especial (lápices, stickers, rompecabezas o juegos). Perfectos como regalo práctico y atractivo. Fáciles de exhibir en ristras, exhibidores o ganchos.
+- AQUA BOOKS Y MAGIC PEN: Colorea con agua (Aqua Books) o con marcador mágico que revela colores (Magic Pen). Reutilizables. Para niños de 3 a 6 años. Estimulan la creatividad. "Una experiencia mágica que encantará a todos."
+
+VENTAJAS OPERATIVAS CLAVE (úsalas cuando sean relevantes para el cliente):
+- Surtido en empaques pequeños: cajas de aprox. 24 unidades surtidas (si son 2 títulos = 12 de cada uno) — mínimo de inversión, máxima variedad
+- Coleccionables: colecciones de 2+ libros con temática común que generan recompra natural
+- Doble código de barras: uno por título, uno por colección — facilita la gestión de inventario del cliente
+- Gran número de colecciones disponible en español e inglés
+- Soluciones de exhibición adaptables a cualquier espacio: Ristras, PDQ, Self PDQ, Exhibidor Colgante, Exhibidor de Piso, Pallet Display
 
 ---
 
@@ -118,23 +141,57 @@ ${deal.ideaTitle ? `IDEA A PRESENTAR:
 DIAGNÓSTICO DE SITUACIÓN:
 ${situacion}
 
-PRIORIDAD PARA ESTE EMAIL:
-${prioridad}
+${strategy ? `ESTRATEGIA SELECCIONADA POR EL VENDEDOR:
+El vendedor eligió este enfoque específico para este mensaje:
+- Enfoque: ${strategy.titulo}
+- Por qué no compra (hipótesis): ${strategy.hipotesis}
+- Cómo abordarlo: ${strategy.enfoque}
+- Puntos clave a incluir: ${strategy.puntosClave.join(" · ")}
 
-REGLAS:
+INSTRUCCIÓN CRÍTICA: Este mensaje DEBE seguir fielmente esta estrategia. El enfoque y los puntos clave deben guiar el ángulo y contenido del mensaje.` : `PRIORIDAD PARA ESTE EMAIL:
+${prioridad}`}
+
+${isWhatsapp ? `REGLAS (mensaje WhatsApp):
+- Tono muy casual y directo, como un WhatsApp real entre conocidos de negocios
+- MÁXIMO 3-4 líneas de texto total
+- NO uses formato markdown (sin **, ni _, ni guiones de lista)
+- No uses saludo formal largo — ve directo al punto
+- Firma con el nombre: ${vendor}
+- Si el cliente es del Caribe anglófono → redacta en inglés
+
+Responde SOLO con JSON, sin texto adicional antes o después:
+{
+  "body": "mensaje WhatsApp en texto plano, máximo 4 líneas"
+}` : `REGLAS:
 - Tono cercano, de colega de negocio — no de vendedor presionando
-- Máximo 3 párrafos cortos y directos
-- Dirigirse por nombre a la persona de contacto si está disponible
+- ESTRUCTURA OBLIGATORIA (no omitir ningún paso):
+  1. Saludo por nombre: "Hola [Nombre]," — si no hay nombre, usa "Hola," o "Hi," (en inglés)
+  2. Línea de apertura humana OBLIGATORIA — esta línea va sola, antes del cuerpo, y debe ser cálida y genuina. Ejemplos: "Espero que estés muy bien." / "Espero que el negocio esté yendo excelente." / "Hope you're doing great!" / "Hope business is going well on your end!" — NO saltar esta línea bajo ninguna circunstancia
+  3. El cuerpo del mensaje (máximo 2 párrafos)
+  4. Cierre con llamada a la acción concreta
+  5. Firma con el nombre: ${vendor}
 - El asunto debe reflejar el ángulo real del email — nada genérico
-- Sin frases vacías ("espero que estés bien", "me dirijo a usted", "por medio de la presente")
-- Firma con el nombre del vendedor: ${vendor}
+- Evitar frases corporativas vacías ("por medio de la presente", "me dirijo a usted con el fin de")
 - Si el cliente es del Caribe anglófono (Barbados, Jamaica, Trinidad, etc.) → redacta en inglés
+
+El campo "body" DEBE comenzar SIEMPRE con estas dos líneas antes del contenido:
+  Línea 1: saludo ("Hola [Nombre]," / "Hi [Nombre],")
+  Línea 2 (línea en blanco)
+  Línea 3: frase de bienvenida cálida ("Espero que estés muy bien." / "Hope you're doing well!")
+  Línea 4 (línea en blanco)
+  Línea 5 en adelante: el cuerpo del mensaje
+
+EJEMPLO CORRECTO de inicio del body:
+"Hi Maria,\\n\\nHope you're doing great!\\n\\nQuick question about..."
+
+INCORRECTO (nunca hagas esto):
+"Quick question about..." ← falta saludo y bienvenida
 
 Responde SOLO con JSON, sin texto adicional antes o después:
 {
   "subject": "asunto del email (máximo 60 caracteres)",
   "body": "cuerpo completo del email con saltos de línea representados como \\n"
-}`;
+}`}`;
 
     const message = await anthropic.messages.create({
       model: "claude-opus-4-8",
@@ -150,10 +207,10 @@ Responde SOLO con JSON, sin texto adicional antes o después:
     const jsonMatch = textBlock.text.match(/\{[\s\S]*\}/);
     if (!jsonMatch) throw new Error("Formato de respuesta del modelo inválido");
 
-    const { subject, body } = JSON.parse(jsonMatch[0]) as { subject: string; body: string };
-    if (!subject || !body) throw new Error("El modelo no generó asunto o cuerpo");
+    const parsed = JSON.parse(jsonMatch[0]) as { subject?: string; body: string };
+    if (!parsed.body) throw new Error("El modelo no generó el cuerpo del mensaje");
 
-    return NextResponse.json({ subject, body });
+    return NextResponse.json({ subject: parsed.subject ?? "", body: parsed.body });
   } catch (err) {
     const message = err instanceof Error ? err.message : "Error desconocido";
     return NextResponse.json({ error: message }, { status: 500 });

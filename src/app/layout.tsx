@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import CookieBanner from "@/components/CookieBanner";
 
 export const metadata: Metadata = {
   title: "SalesAI — Prospección, Seguimiento y Propuestas con IA",
@@ -14,7 +15,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        {children}
+        <CookieBanner />
+      </body>
     </html>
   );
 }
