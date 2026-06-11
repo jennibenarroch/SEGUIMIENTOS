@@ -5,6 +5,132 @@ import type { Deal } from "@/app/dashboard/seguimiento/page";
 // Actívados con NEXT_PUBLIC_USE_MOCK=true en .env.local
 // NUNCA se usan en producción (la variable no existe en Vercel)
 
+export type SuggestedProspect = {
+  id: string;
+  name: string;
+  country: string;
+  category: string;
+  razon: string;         // por qué la IA los sugiere
+  contactoCargo: string; // cargo estimado del comprador de categoría
+  canal: "WhatsApp" | "Email";
+  semana: string;        // "2026-W24"
+  idioma: "es" | "en";
+};
+
+// Semana 9–15 junio 2026 (W24)
+export const MOCK_SUGGESTED_PROSPECTS: SuggestedProspect[] = [
+  {
+    id: "sug-001",
+    name: "Hipermás El Salvador",
+    country: "El Salvador",
+    category: "Snacks & Confitería",
+    razon: "Cadena de 18 hipermercados. Sin distribuidor activo en categoría Snacks según perfil LinkedIn de su equipo de compras.",
+    contactoCargo: "Jefe de Compras",
+    canal: "WhatsApp",
+    semana: "2026-W24",
+    idioma: "es",
+  },
+  {
+    id: "sug-002",
+    name: "Distribuidora Castillo & Asociados",
+    country: "Honduras",
+    category: "Bebidas & Snacks",
+    razon: "Distribuidora regional con cobertura en 6 departamentos. Busca ampliar portafolio de snacks para el canal tradicional.",
+    contactoCargo: "Gerente Comercial",
+    canal: "WhatsApp",
+    semana: "2026-W24",
+    idioma: "es",
+  },
+  {
+    id: "sug-003",
+    name: "Selectos Supermercados",
+    country: "El Salvador",
+    category: "Confitería",
+    razon: "Cadena nacional con 25 puntos de venta. Su exhibidor de confitería lleva más de 6 meses sin renovar proveedor.",
+    contactoCargo: "Category Manager",
+    canal: "Email",
+    semana: "2026-W24",
+    idioma: "es",
+  },
+  {
+    id: "sug-004",
+    name: "Super Selectos Nicaragua",
+    country: "Nicaragua",
+    category: "Limpieza del Hogar",
+    razon: "Segunda cadena de supermercados del país. Perfil de compras activo en LinkedIn con búsquedas recientes de proveedores de limpieza.",
+    contactoCargo: "Jefe de Compras",
+    canal: "WhatsApp",
+    semana: "2026-W24",
+    idioma: "es",
+  },
+  {
+    id: "sug-005",
+    name: "IGA Supermarkets Jamaica",
+    country: "Jamaica",
+    category: "Bebidas & Confitería",
+    razon: "Franquicia IGA con 9 tiendas en Kingston y Montego Bay. Compradores activos en ferias regionales del Caribe.",
+    contactoCargo: "Purchasing Manager",
+    canal: "Email",
+    semana: "2026-W24",
+    idioma: "en",
+  },
+  {
+    id: "sug-006",
+    name: "Mega Depot Trinidad",
+    country: "Trinidad",
+    category: "Snacks & Limpieza del Hogar",
+    razon: "Cash & Carry mayorista con 3 sucursales. Importa directamente de Panamá y Colombia. Contacto identificado en directorio TTMA.",
+    contactoCargo: "Procurement Manager",
+    canal: "Email",
+    semana: "2026-W24",
+    idioma: "en",
+  },
+  {
+    id: "sug-007",
+    name: "La Torre Guatemala",
+    country: "Guatemala",
+    category: "Cuidado Personal",
+    razon: "Cadena de tiendas de descuento con presencia en 12 ciudades. Alta rotación en categoría cuidado personal según reporte sectorial.",
+    contactoCargo: "Gerente de Compras",
+    canal: "WhatsApp",
+    semana: "2026-W24",
+    idioma: "es",
+  },
+  {
+    id: "sug-008",
+    name: "Courts Barbados",
+    country: "Barbados",
+    category: "Confitería & Snacks",
+    razon: "Retail establecido en Bridgetown con sección de alimentos en expansión. Busca proveedores latinoamericanos según su newsletter comercial.",
+    contactoCargo: "Buying Manager",
+    canal: "Email",
+    semana: "2026-W24",
+    idioma: "en",
+  },
+  {
+    id: "sug-009",
+    name: "Corporación Multi Inversiones CR",
+    country: "Costa Rica",
+    category: "Snacks & Bebidas",
+    razon: "Grupo empresarial con cadena Pollo Campero y puntos retail. Licitación abierta para snacks en canales de conveniencia.",
+    contactoCargo: "Category Manager",
+    canal: "WhatsApp",
+    semana: "2026-W24",
+    idioma: "es",
+  },
+  {
+    id: "sug-010",
+    name: "United Grocers Barbados",
+    country: "Barbados",
+    category: "Bebidas & Limpieza del Hogar",
+    razon: "Mayorista caribeño con red de 40 clientes minoristas en Barbados y Santa Lucía. Asistente a feria CHTA 2026.",
+    contactoCargo: "Sales & Purchasing Director",
+    canal: "Email",
+    semana: "2026-W24",
+    idioma: "en",
+  },
+];
+
 export const MOCK_PROSPECTS: Prospect[] = [
   {
     id: "mock-001",

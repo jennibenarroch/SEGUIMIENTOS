@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo, useEffect, useRef } from "react";
-import { ArrowLeft, Search, AlertCircle, ExternalLink, RefreshCw, Send, X, CheckCircle, SendHorizonal, Sparkles, Mail, ChevronDown, ChevronUp } from "lucide-react";
+import { ArrowLeft, Search, AlertCircle, ExternalLink, RefreshCw, Send, X, CheckCircle, SendHorizonal, Sparkles, Mail, ChevronDown, ChevronUp, Plus } from "lucide-react";
 import type { Prospect } from "./page";
 
 // ── Colores de estado ────────────────────────────────────────────────────────
@@ -29,13 +29,22 @@ function startOfCurrentWeek(): Date {
   return monday;
 }
 
+function startOfLastWeek(): Date {
+  const m = startOfCurrentWeek();
+  const last = new Date(m);
+  last.setDate(m.getDate() - 7);
+  return last;
+}
+
 type Health = "green" | "yellow" | "red";
 
 function contactHealth(lastContact: string): Health {
-  if (!lastContact) return "red";
+  if (!lastContact || lastContact === "—") return "red";
   const d = new Date(lastContact);
   if (isNaN(d.getTime())) return "red";
-  return d >= startOfCurrentWeek() ? "green" : "yellow";
+  if (d >= startOfCurrentWeek()) return "green";
+  if (d >= startOfLastWeek())    return "yellow";
+  return "red";
 }
 
 function daysAgo(dateStr: string): string {
@@ -802,6 +811,13 @@ export default function ProspeccionClient({ prospects, error, boardId }: Props) 
           </div>
           <div className="ml-auto flex items-center gap-3">
             <a
+              href="/dashboard/prospeccion/nuevos"
+              className="flex items-center gap-1.5 text-xs font-semibold text-violet-400 hover:text-violet-300 border border-violet-500/40 hover:border-violet-400 bg-violet-500/10 hover:bg-violet-500/15 px-3 py-1.5 rounded-lg transition-all"
+            >
+              <Plus className="w-3.5 h-3.5" />
+              Prospectos nuevos IA
+            </a>
+            <a
               href={`https://sicobenediciones.monday.com/boards/${boardId}`}
               target="_blank"
               rel="noreferrer"
@@ -836,10 +852,10 @@ export default function ProspeccionClient({ prospects, error, boardId }: Props) 
           {!error && (
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
               {[
-                { label: "Total prospectos",        value: stats.total,  dot: "bg-slate-500" },
-                { label: "Contactados esta semana", value: stats.green,  dot: "bg-green-400" },
-                { label: "Sin contacto reciente",   value: stats.yellow, dot: "bg-yellow-400" },
-                { label: "Nunca contactados",        value: stats.red,    dot: "bg-red-500" },
+                { label: "Total prospectos",            value: stats.total,  dot: "bg-slate-500" },
+                { label: "Contactados esta semana",     value: stats.green,  dot: "bg-green-400" },
+                { label: "Contactados semana pasada",   value: stats.yellow, dot: "bg-yellow-400" },
+                { label: "Más de 1 semana sin acción",  value: stats.red,    dot: "bg-red-500" },
               ].map((s) => (
                 <div key={s.label} className="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center">
                   <div className="flex items-center justify-center gap-2 mb-1">
