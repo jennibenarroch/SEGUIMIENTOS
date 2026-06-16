@@ -49,7 +49,7 @@ export async function POST(req: Request) {
       )];
 
       const { error } = await resend.emails.send({
-        from: "onboarding@resend.dev",
+        from: "SalesAI Sicoben <ventas@sicobenediciones.com>",
         to: emailTo,
         ...(ccList.length > 0 ? { cc: ccList } : {}),
         subject,
