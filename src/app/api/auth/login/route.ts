@@ -1,9 +1,19 @@
 import { NextResponse } from "next/server";
-import { createHmac } from "crypto";
 
-function signSession(name: string): string {
+async function signSession(name: string): Promise<string> {
   const secret = process.env.AUTH_SECRET ?? "fallback-secret";
-  const sig = createHmac("sha256", secret).update(name).digest("hex");
+  const encoder = new TextEncoder();
+  const key = await crypto.subtle.importKey(
+    "raw",
+    encoder.encode(secret),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"]
+  );
+  const sigBuffer = await crypto.subtle.sign("HMAC", key, encoder.encode(name));
+  const sig = Array.from(new Uint8Array(sigBuffer))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
   return `${name}.${sig}`;
 }
 
@@ -23,14 +33,14 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Contraseña incorrecta." }, { status: 401 });
     }
 
-    const sessionValue = signSession(name.trim());
+    const sessionValue = await signSession(name.trim());
     const response = NextResponse.json({ ok: true });
     response.cookies.set("session", sessionValue, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       path: "/",
-      maxAge: 60 * 60 * 24 * 7, // 7 días
+      maxAge: 60 * 60 * 24 * 7,
     });
     return response;
   } catch {
