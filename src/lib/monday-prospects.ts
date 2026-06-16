@@ -25,7 +25,8 @@ type BoardResponse = {
 };
 
 // Solo las columnas que mostramos en la tabla
-const NEEDED_COLUMNS = ["status", "text3", "color_mm0ykm0j", "fecha0", "fecha53", "text9", "tel_fono", "multiple_person"];
+// "text_contacto" = columna de nombre de contacto en Monday (configurar al conectar el board real)
+const NEEDED_COLUMNS = ["status", "text3", "color_mm0ykm0j", "fecha0", "fecha53", "text9", "tel_fono", "multiple_person", "text"];
 
 const PROSPECTS_QUERY = `
   query GetProspects($boardId: ID!, $cursor: String, $cols: [String!]) {

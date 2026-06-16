@@ -1,14 +1,57 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import LegalLayout from "@/components/legal/LegalLayout";
 
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://salesai.sicobenediciones.com";
+
 export const metadata: Metadata = {
-  title: "Términos y Condiciones · SalesAI",
-  description: "Condiciones de uso de SalesAI, la herramienta de asistencia de ventas de Sicoben Ediciones.",
+  title: "Términos y Condiciones",
+  description:
+    "Condiciones de uso de SalesAI: uso autorizado, responsabilidad sobre mensajes, propiedad intelectual y disponibilidad del servicio.",
+  alternates: { canonical: `${APP_URL}/terminos` },
+  openGraph: {
+    type: "website",
+    url: `${APP_URL}/terminos`,
+    siteName: "SalesAI",
+    locale: "es_PA",
+    title: "Términos y Condiciones · SalesAI",
+    description:
+      "Condiciones de uso de SalesAI: uso autorizado, responsabilidad sobre mensajes y disponibilidad.",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "SalesAI" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Términos y Condiciones · SalesAI",
+    description: "Condiciones de uso de SalesAI para el equipo comercial de Sicoben Ediciones.",
+    images: ["/opengraph-image"],
+  },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": `${APP_URL}/terminos`,
+  name: "Términos y Condiciones · SalesAI",
+  description:
+    "Condiciones de uso de SalesAI: uso autorizado, propiedad intelectual y responsabilidades.",
+  url: `${APP_URL}/terminos`,
+  inLanguage: "es",
+  dateModified: "2026-06-10",
+  publisher: {
+    "@type": "Organization",
+    name: "Sicoben Ediciones",
+    email: "jenni.benarroch@sicobenediciones.com",
+  },
+  isPartOf: { "@id": `${APP_URL}/#webapp` },
 };
 
 export default function TerminosPage() {
   return (
-    <LegalLayout
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <LegalLayout
       title="Términos y Condiciones"
       updatedAt="10 de junio de 2026"
       otherLinks={[
@@ -120,5 +163,6 @@ export default function TerminosPage() {
         </a>.
       </p>
     </LegalLayout>
+    </>
   );
 }

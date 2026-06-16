@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 import { getSeasonContext } from "@/lib/seasons";
+import { safeError } from "@/lib/api-error";
 
 export type Strategy = {
   titulo: string;
@@ -124,7 +125,7 @@ Responde SOLO con JSON válido, sin texto adicional:
     return NextResponse.json({ strategies });
   } catch (err) {
     return NextResponse.json(
-      { error: err instanceof Error ? err.message : "Error desconocido" },
+      { error: safeError(err) },
       { status: 500 },
     );
   }

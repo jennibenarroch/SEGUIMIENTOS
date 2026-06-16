@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { mondayQuery } from "@/lib/monday";
+import { safeError } from "@/lib/api-error";
 
 // Notificación directa a un usuario en Monday (campanazo)
 const NOTIFY_USER = `
@@ -77,7 +78,6 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ ok: true });
   } catch (err) {
-    const message = err instanceof Error ? err.message : "Error desconocido";
-    return NextResponse.json({ error: message }, { status: 500 });
+    return NextResponse.json({ error: safeError(err) }, { status: 500 });
   }
 }

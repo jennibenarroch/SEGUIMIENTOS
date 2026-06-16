@@ -1,14 +1,57 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import LegalLayout from "@/components/legal/LegalLayout";
 
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://salesai.sicobenediciones.com";
+
 export const metadata: Metadata = {
-  title: "Aviso Legal · SalesAI",
-  description: "Información legal sobre SalesAI y Sicoben Ediciones.",
+  title: "Aviso Legal",
+  description:
+    "Información legal sobre SalesAI y Sicoben Ediciones: titularidad, propiedad intelectual, exención de responsabilidad y ley aplicable.",
+  alternates: { canonical: `${APP_URL}/aviso-legal` },
+  openGraph: {
+    type: "website",
+    url: `${APP_URL}/aviso-legal`,
+    siteName: "SalesAI",
+    locale: "es_PA",
+    title: "Aviso Legal · SalesAI",
+    description:
+      "Información legal sobre SalesAI y Sicoben Ediciones: titularidad, propiedad intelectual y ley aplicable.",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "SalesAI" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Aviso Legal · SalesAI",
+    description: "Información legal sobre SalesAI y Sicoben Ediciones.",
+    images: ["/opengraph-image"],
+  },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": `${APP_URL}/aviso-legal`,
+  name: "Aviso Legal · SalesAI",
+  description:
+    "Información legal sobre SalesAI y Sicoben Ediciones: titularidad, propiedad intelectual y ley aplicable.",
+  url: `${APP_URL}/aviso-legal`,
+  inLanguage: "es",
+  dateModified: "2026-06-10",
+  publisher: {
+    "@type": "Organization",
+    name: "Sicoben Ediciones",
+    email: "jenni.benarroch@sicobenediciones.com",
+  },
+  isPartOf: { "@id": `${APP_URL}/#webapp` },
 };
 
 export default function AvisoLegalPage() {
   return (
-    <LegalLayout
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <LegalLayout
       title="Aviso Legal"
       updatedAt="10 de junio de 2026"
       otherLinks={[
@@ -100,5 +143,6 @@ export default function AvisoLegalPage() {
         </a>.
       </p>
     </LegalLayout>
+    </>
   );
 }

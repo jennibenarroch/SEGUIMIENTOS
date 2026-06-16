@@ -1,6 +1,13 @@
+import type { Metadata } from "next";
 import { getProspects, col, type MondayItem } from "@/lib/monday-prospects";
+
+export const metadata: Metadata = {
+  title: "Prospeccion",
+  robots: { index: false, follow: false },
+};
 import { MOCK_PROSPECTS } from "@/lib/mock-data";
 import ProspeccionClient from "./ProspeccionClient";
+export type { Prospect } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
@@ -14,19 +21,7 @@ function timeSince(dateStr: string): string {
   return `${Math.floor(days / 30)}mes`;
 }
 
-export type Prospect = {
-  id: string;
-  name: string;
-  country: string;
-  status: string;
-  seller: string;
-  vendorIds: number[];   // IDs de usuario Monday para notificación directa
-  category: string;
-  nextContact: string;
-  lastContact: string;
-  updatedAt: string;
-  createdAt: string;
-};
+import type { Prospect } from "@/lib/types";
 
 function extractVendorIds(item: MondayItem): number[] {
   const col = item.column_values.find((c) => c.id === "multiple_person");
@@ -54,6 +49,7 @@ function toProspect(item: MondayItem): Prospect {
     lastContact: col(item, "fecha53"),
     updatedAt: timeSince(item.updated_at),
     createdAt: item.created_at,
+    contactPerson: col(item, "text") || undefined,
   };
 }
 

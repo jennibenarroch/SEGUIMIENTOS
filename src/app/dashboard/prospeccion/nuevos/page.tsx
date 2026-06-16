@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
 import { MOCK_SUGGESTED_PROSPECTS } from "@/lib/mock-data";
+
+export const metadata: Metadata = {
+  title: "Prospectos Nuevos",
+  robots: { index: false, follow: false },
+};
 import NuevosClient from "./NuevosClient";
 
 export const dynamic = "force-dynamic";

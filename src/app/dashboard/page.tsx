@@ -1,3 +1,10 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Dashboard",
+  robots: { index: false, follow: false },
+};
 import { Target, RefreshCw, FileText, Lightbulb, Users, Plane, BarChart3, Layout } from "lucide-react";
 import { Zap } from "lucide-react";
 
@@ -113,9 +120,9 @@ export default function DashboardPage() {
           </div>
           <span className="text-base font-bold text-white">SalesAI</span>
         </div>
-        <a href="/" className="text-sm text-slate-500 hover:text-slate-300 transition-colors">
+        <Link href="/" className="text-sm text-slate-500 hover:text-slate-300 transition-colors">
           Salir
-        </a>
+        </Link>
       </header>
 
       {/* Content */}
@@ -127,7 +134,7 @@ export default function DashboardPage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {modules.map((mod) => (
-            <a
+            <Link
               key={mod.title}
               href={mod.href}
               className={`group relative p-6 rounded-2xl bg-slate-900 border transition-all cursor-pointer ${border[mod.accent] ?? border.blue}`}
@@ -143,7 +150,7 @@ export default function DashboardPage() {
               <p className={`text-xs font-semibold mb-1 ${badgeCls[mod.accent] ?? badgeCls.blue}`}>{mod.tag}</p>
               <h2 className="text-sm font-semibold text-white mb-2 leading-snug">{mod.title}</h2>
               <p className="text-xs text-slate-400 leading-relaxed">{mod.description}</p>
-            </a>
+            </Link>
           ))}
         </div>
       </main>

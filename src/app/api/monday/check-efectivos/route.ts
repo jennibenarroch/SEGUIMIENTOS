@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getProspects, col } from "@/lib/monday-prospects";
+import { safeError } from "@/lib/api-error";
 
 export async function GET() {
   try {
@@ -13,7 +14,6 @@ export async function GET() {
       }));
     return NextResponse.json(efectivos);
   } catch (err) {
-    const message = err instanceof Error ? err.message : "Error desconocido";
-    return NextResponse.json({ error: message }, { status: 500 });
+    return NextResponse.json({ error: safeError(err) }, { status: 500 });
   }
 }

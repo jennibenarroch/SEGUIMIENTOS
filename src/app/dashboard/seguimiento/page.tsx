@@ -1,28 +1,17 @@
+import type { Metadata } from "next";
 import { getDeals, dealCol, type DealItem } from "@/lib/monday-deals";
+
+export const metadata: Metadata = {
+  title: "Seguimiento",
+  robots: { index: false, follow: false },
+};
 import { MOCK_DEALS } from "@/lib/mock-data";
 import SeguimientoClient from "./SeguimientoClient";
+export type { Deal } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
-export type Deal = {
-  id: string;
-  name: string;
-  country: string;
-  category: string;
-  fase: string;
-  estadoKpi: string;
-  contactPerson: string;
-  buyerPerson: string;
-  email: string;
-  email1: string;
-  vendor: string;
-  lastContact: string;
-  nextAction: string;
-  targetMonth: string;
-  targetValue: string;
-  lastNotes: string;
-  updatedAt: string;
-};
+import type { Deal } from "@/lib/types";
 
 function timeSince(dateStr: string): string {
   const diff = Date.now() - new Date(dateStr).getTime();

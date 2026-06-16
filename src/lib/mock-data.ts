@@ -1,5 +1,4 @@
-import type { Prospect } from "@/app/dashboard/prospeccion/page";
-import type { Deal } from "@/app/dashboard/seguimiento/page";
+import type { Prospect, Deal } from "@/lib/types";
 
 // ── Datos ficticios para desarrollo local ─────────────────────────────────────
 // Actívados con NEXT_PUBLIC_USE_MOCK=true en .env.local
@@ -132,201 +131,114 @@ export const MOCK_SUGGESTED_PROSPECTS: SuggestedProspect[] = [
 ];
 
 export const MOCK_PROSPECTS: Prospect[] = [
-  {
-    id: "mock-001",
-    name: "Supermercados La Colonia",
-    country: "Guatemala",
-    status: "sin acción",
-    seller: "Carlos Méndez",
-    vendorIds: [],
-    category: "Snacks & Confitería",
-    lastContact: "2026-05-20",
-    nextContact: "2026-06-10",
-    updatedAt: "3sem",
-    createdAt: "2026-05-01T00:00:00.000Z",
-  },
-  {
-    id: "mock-002",
-    name: "Distribuidora Rojas & Hijos",
-    country: "Costa Rica",
-    status: "contacto efectivo",
-    seller: "Jenni Benarroch",
-    vendorIds: [],
-    category: "Confitería",
-    lastContact: "2026-06-08",
-    nextContact: "2026-06-12",
-    updatedAt: "ayer",
-    createdAt: "2026-05-10T00:00:00.000Z",
-  },
-  {
-    id: "mock-003",
-    name: "Mercado Central CR",
-    country: "Costa Rica",
-    status: "propuesta enviada",
-    seller: "María López",
-    vendorIds: [],
-    category: "Bebidas & Snacks",
-    lastContact: "2026-06-05",
-    nextContact: "2026-06-11",
-    updatedAt: "4d",
-    createdAt: "2026-05-12T00:00:00.000Z",
-  },
-  {
-    id: "mock-004",
-    name: "Super 99 Panama",
-    country: "Panamá",
-    status: "negociación",
-    seller: "Jenni Benarroch",
-    vendorIds: [],
-    category: "Cuidado Personal",
-    lastContact: "2026-06-07",
-    nextContact: "2026-06-14",
-    updatedAt: "2d",
-    createdAt: "2026-04-20T00:00:00.000Z",
-  },
-  {
-    id: "mock-005",
-    name: "Do it Center Jamaica",
-    country: "Jamaica",
-    status: "sin acción",
-    seller: "Carlos Méndez",
-    vendorIds: [],
-    category: "Limpieza del Hogar",
-    lastContact: "2026-05-15",
-    nextContact: "2026-06-09",
-    updatedAt: "3sem",
-    createdAt: "2026-05-05T00:00:00.000Z",
-  },
-  {
-    id: "mock-006",
-    name: "Massy Stores Trinidad",
-    country: "Trinidad",
-    status: "contacto efectivo",
-    seller: "María López",
-    vendorIds: [],
-    category: "Confitería & Bebidas",
-    lastContact: "2026-06-09",
-    nextContact: "2026-06-13",
-    updatedAt: "hoy",
-    createdAt: "2026-05-18T00:00:00.000Z",
-  },
-  {
-    id: "mock-007",
-    name: "Walmart Guatemala Ciudad",
-    country: "Guatemala",
-    status: "inactivo",
-    seller: "Carlos Méndez",
-    vendorIds: [],
-    category: "Snacks",
-    lastContact: "2026-04-10",
-    nextContact: "",
-    updatedAt: "2mes",
-    createdAt: "2026-03-15T00:00:00.000Z",
-  },
-  {
-    id: "mock-008",
-    name: "PriceSmart Costa Rica",
-    country: "Costa Rica",
-    status: "sin acción",
-    seller: "Jenni Benarroch",
-    vendorIds: [],
-    category: "Snacks & Bebidas",
-    lastContact: "2026-06-02",
-    nextContact: "2026-06-10",
-    updatedAt: "1sem",
-    createdAt: "2026-05-22T00:00:00.000Z",
-  },
-  {
-    id: "mock-009",
-    name: "Palí Honduras",
-    country: "Honduras",
-    status: "propuesta enviada",
-    seller: "María López",
-    vendorIds: [],
-    category: "Confitería",
-    lastContact: "2026-06-06",
-    nextContact: "2026-06-13",
-    updatedAt: "3d",
-    createdAt: "2026-05-25T00:00:00.000Z",
-  },
-  {
-    id: "mock-010",
-    name: "Massy Supermarket Barbados",
-    country: "Barbados",
-    status: "sin acción",
-    seller: "Carlos Méndez",
-    vendorIds: [],
-    category: "Cuidado Personal & Hogar",
-    lastContact: "2026-05-28",
-    nextContact: "2026-06-11",
-    updatedAt: "1sem",
-    createdAt: "2026-05-20T00:00:00.000Z",
-  },
-  {
-    id: "mock-011",
-    name: "Maxibodega El Salvador",
-    country: "El Salvador",
-    status: "negociación",
-    seller: "Jenni Benarroch",
-    vendorIds: [],
-    category: "Snacks & Confitería",
-    lastContact: "2026-06-08",
-    nextContact: "2026-06-16",
-    updatedAt: "ayer",
-    createdAt: "2026-04-30T00:00:00.000Z",
-  },
-  {
-    id: "mock-012",
-    name: "Super BM Guatemala",
-    country: "Guatemala",
-    status: "contacto efectivo",
-    seller: "María López",
-    vendorIds: [],
-    category: "Bebidas",
-    lastContact: "2026-06-09",
-    nextContact: "2026-06-15",
-    updatedAt: "hoy",
-    createdAt: "2026-05-28T00:00:00.000Z",
-  },
-  {
-    id: "mock-013",
-    name: "Hi-Lo Food Stores Jamaica",
-    country: "Jamaica",
-    status: "propuesta enviada",
-    seller: "María López",
-    vendorIds: [],
-    category: "Confitería",
-    lastContact: "2026-06-04",
-    nextContact: "2026-06-12",
-    updatedAt: "5d",
-    createdAt: "2026-05-15T00:00:00.000Z",
-  },
-  {
-    id: "mock-014",
-    name: "Automercado CR",
-    country: "Costa Rica",
-    status: "cliente",
-    seller: "Jenni Benarroch",
-    vendorIds: [],
-    category: "Snacks & Cuidado Personal",
-    lastContact: "2026-06-07",
-    nextContact: "2026-06-21",
-    updatedAt: "2d",
-    createdAt: "2026-02-10T00:00:00.000Z",
-  },
-  {
-    id: "mock-015",
-    name: "Giant Supermarket Jamaica",
-    country: "Jamaica",
-    status: "sin acción",
-    seller: "Carlos Méndez",
-    vendorIds: [],
-    category: "Bebidas & Snacks",
-    lastContact: "2026-05-30",
-    nextContact: "2026-06-10",
-    updatedAt: "1sem",
-    createdAt: "2026-05-22T00:00:00.000Z",
-  },
+  // ── Antigua y Barbuda ──────────────────────────────────────────────────────
+  { id: "mock-001", name: "Caribbean School Supplies Ltd",    country: "Antigua y Barbuda",         status: "contacto efectivo",seller: "Daniel",       vendorIds: [], category: "Papelería & Útiles",        lastContact: "2026-06-09", nextContact: "2026-06-16", updatedAt: "hoy",  createdAt: "2026-06-09T00:00:00Z", contactPerson: "Marcus Joseph" },
+  { id: "mock-002", name: "Fun Zone Toys Antigua",            country: "Antigua y Barbuda",         status: "sin acción",       seller: "Daniel",       vendorIds: [], category: "Juguetería & Entretenimiento",lastContact: "2026-05-28", nextContact: "2026-06-14", updatedAt: "1sem", createdAt: "2026-04-15T00:00:00Z", contactPerson: "Diane Williams" },
+  // ── Argentina ──────────────────────────────────────────────────────────────
+  { id: "mock-003", name: "DISMEX Argentina Papelería",       country: "Argentina",                 status: "contacto efectivo",seller: "Orlando",      vendorIds: [], category: "Papelería & Útiles",        lastContact: "2026-06-10", nextContact: "2026-06-17", updatedAt: "hoy",  createdAt: "2026-06-10T00:00:00Z", contactPerson: "Valentina Russo" },
+  { id: "mock-004", name: "Almacén El Gaucho SA",             country: "Argentina",                 status: "sin acción",       seller: "Orlando",      vendorIds: [], category: "Almacén General",            lastContact: "2026-05-28", nextContact: "2026-06-14", updatedAt: "1sem", createdAt: "2026-05-05T00:00:00Z", contactPerson: "Diego Fernández" },
+  // ── Aruba ──────────────────────────────────────────────────────────────────
+  { id: "mock-005", name: "ABC Bookstore Aruba",              country: "Aruba",                     status: "negociación",      seller: "Daniel",       vendorIds: [], category: "Librería & Editorial",       lastContact: "2026-06-07", nextContact: "2026-06-14", updatedAt: "2d",   createdAt: "2026-04-20T00:00:00Z", contactPerson: "Sandra Ling" },
+  { id: "mock-006", name: "Island Home Center Aruba",         country: "Aruba",                     status: "sin acción",       seller: "Daniel",       vendorIds: [], category: "Hogar & Decoración",         lastContact: "2026-05-15", nextContact: "2026-06-10", updatedAt: "3sem", createdAt: "2026-05-08T00:00:00Z", contactPerson: "Peter Kong" },
+  // ── Bahamas ────────────────────────────────────────────────────────────────
+  { id: "mock-007", name: "Nassau Office Supplies Ltd",       country: "Bahamas",                   status: "propuesta enviada",seller: "Daniel",       vendorIds: [], category: "Papelería & Útiles",        lastContact: "2026-06-09", nextContact: "2026-06-16", updatedAt: "hoy",  createdAt: "2026-06-09T00:00:00Z", contactPerson: "Trevor Rolle" },
+  { id: "mock-008", name: "Bahamas Toy World",                country: "Bahamas",                   status: "contacto efectivo",seller: "Daniel",       vendorIds: [], category: "Juguetería & Entretenimiento",lastContact: "2026-06-04", nextContact: "2026-06-15", updatedAt: "5d",   createdAt: "2026-05-20T00:00:00Z", contactPerson: "Angela Solomon" },
+  // ── Barbados ───────────────────────────────────────────────────────────────
+  { id: "mock-009", name: "Barbados Book Depot",              country: "Barbados",                  status: "sin acción",       seller: "Daniel",       vendorIds: [], category: "Librería & Editorial",       lastContact: "2026-05-28", nextContact: "2026-06-11", updatedAt: "1sem", createdAt: "2026-05-18T00:00:00Z", contactPerson: "David Clarke" },
+  { id: "mock-010", name: "Island Pharmacy Barbados",         country: "Barbados",                  status: "propuesta enviada",seller: "Daniel",       vendorIds: [], category: "Farmacia & Salud",           lastContact: "2026-06-04", nextContact: "2026-06-16", updatedAt: "5d",   createdAt: "2026-04-25T00:00:00Z", contactPerson: "Natalie Gill" },
+  // ── Belize ─────────────────────────────────────────────────────────────────
+  { id: "mock-011", name: "Belize City Stationery Ltd",       country: "Belize",                    status: "sin acción",       seller: "Daniel",       vendorIds: [], category: "Papelería & Útiles",        lastContact: "2026-06-02", nextContact: "2026-06-12", updatedAt: "1sem", createdAt: "2026-05-22T00:00:00Z", contactPerson: "Linda Trapp" },
+  { id: "mock-012", name: "Brodies Superstore Belize",        country: "Belize",                    status: "contacto efectivo",seller: "Daniel",       vendorIds: [], category: "Supermercado",               lastContact: "2026-06-08", nextContact: "2026-06-15", updatedAt: "ayer", createdAt: "2026-05-01T00:00:00Z", contactPerson: "Carlos Mira" },
+  // ── Bolivia ────────────────────────────────────────────────────────────────
+  { id: "mock-013", name: "Librería Los Andes Bolivia",       country: "Bolivia",                   status: "propuesta enviada",seller: "John",         vendorIds: [], category: "Librería & Editorial",       lastContact: "2026-06-10", nextContact: "2026-06-17", updatedAt: "hoy",  createdAt: "2026-06-10T00:00:00Z", contactPerson: "Paola Vargas" },
+  { id: "mock-014", name: "Farmacia Bolivia SA",              country: "Bolivia",                   status: "sin acción",       seller: "John",         vendorIds: [], category: "Farmacia & Salud",           lastContact: "2026-05-20", nextContact: "2026-06-13", updatedAt: "3sem", createdAt: "2026-05-14T00:00:00Z", contactPerson: "Jorge Morales" },
+  // ── Chile ──────────────────────────────────────────────────────────────────
+  { id: "mock-015", name: "Dist. Útiles Escolares Chile",     country: "Chile",                     status: "contacto efectivo",seller: "Joaquin",      vendorIds: [], category: "Papelería & Útiles",        lastContact: "2026-06-11", nextContact: "2026-06-18", updatedAt: "hoy",  createdAt: "2026-06-11T00:00:00Z", contactPerson: "Isidora Pizarro" },
+  { id: "mock-016", name: "Juguetería El Niño Feliz Chile",   country: "Chile",                     status: "sin acción",       seller: "Joaquin",      vendorIds: [], category: "Juguetería & Entretenimiento",lastContact: "2026-06-01", nextContact: "2026-06-15", updatedAt: "1sem", createdAt: "2026-05-05T00:00:00Z", contactPerson: "Rodrigo Soto" },
+  // ── Colombia ───────────────────────────────────────────────────────────────
+  { id: "mock-017", name: "Dist. Panamericana Colombia",      country: "Colombia",                  status: "contacto efectivo",seller: "John",         vendorIds: [], category: "Papelería & Útiles",        lastContact: "2026-06-09", nextContact: "2026-06-16", updatedAt: "hoy",  createdAt: "2026-06-09T00:00:00Z", contactPerson: "Catalina Gómez" },
+  { id: "mock-018", name: "Almacén Hogar Colombia",           country: "Colombia",                  status: "sin acción",       seller: "John",         vendorIds: [], category: "Hogar & Decoración",         lastContact: "2026-05-25", nextContact: "2026-06-12", updatedAt: "2sem", createdAt: "2026-04-28T00:00:00Z", contactPerson: "Andrés Peñaloza" },
+  // ── Costa Rica ─────────────────────────────────────────────────────────────
+  { id: "mock-019", name: "Librería Universal CR",            country: "Costa Rica",                status: "negociación",      seller: "John",         vendorIds: [], category: "Librería & Editorial",       lastContact: "2026-06-12", nextContact: "2026-06-19", updatedAt: "hoy",  createdAt: "2026-06-12T00:00:00Z", contactPerson: "Ricardo Ureña" },
+  { id: "mock-020", name: "Farmacia La Botica CR",            country: "Costa Rica",                status: "propuesta enviada",seller: "John",         vendorIds: [], category: "Farmacia & Salud",           lastContact: "2026-06-02", nextContact: "2026-06-16", updatedAt: "1sem", createdAt: "2026-05-22T00:00:00Z", contactPerson: "Laura Chinchilla" },
+  // ── Cuba ───────────────────────────────────────────────────────────────────
+  { id: "mock-021", name: "Almacén El Capitolio Cuba",        country: "Cuba",                      status: "sin acción",       seller: "Daniel",       vendorIds: [], category: "Almacén General",            lastContact: "2026-05-10", nextContact: "2026-06-10", updatedAt: "1mes", createdAt: "2026-04-05T00:00:00Z", contactPerson: "Yolanda Pérez" },
+  { id: "mock-022", name: "Librería Cervantes Cuba",          country: "Cuba",                      status: "contacto efectivo",seller: "Daniel",       vendorIds: [], category: "Librería & Editorial",       lastContact: "2026-06-07", nextContact: "2026-06-15", updatedAt: "2d",   createdAt: "2026-04-20T00:00:00Z", contactPerson: "Ramón Suárez" },
+  // ── Curaçao ────────────────────────────────────────────────────────────────
+  { id: "mock-023", name: "Boekhandel El Mundo Curaçao",      country: "Curaçao",                   status: "sin acción",       seller: "Daniel",       vendorIds: [], category: "Librería & Editorial",       lastContact: "2026-05-20", nextContact: "2026-06-12", updatedAt: "3sem", createdAt: "2026-05-15T00:00:00Z", contactPerson: "Rosalina Martina" },
+  { id: "mock-024", name: "Island Toys Curaçao",              country: "Curaçao",                   status: "propuesta enviada",seller: "Daniel",       vendorIds: [], category: "Juguetería & Entretenimiento",lastContact: "2026-06-05", nextContact: "2026-06-14", updatedAt: "4d",   createdAt: "2026-04-30T00:00:00Z", contactPerson: "Michel van den Berg" },
+  // ── Dominica ───────────────────────────────────────────────────────────────
+  { id: "mock-025", name: "Dominica Office Supplies",         country: "Dominica",                  status: "sin acción",       seller: "Daniel",       vendorIds: [], category: "Papelería & Útiles",        lastContact: "2026-05-22", nextContact: "2026-06-11", updatedAt: "2sem", createdAt: "2026-05-02T00:00:00Z", contactPerson: "Paula Astaphan" },
+  { id: "mock-026", name: "Nature Isle Pharmacy Dominica",    country: "Dominica",                  status: "propuesta enviada",seller: "Daniel",       vendorIds: [], category: "Farmacia & Salud",           lastContact: "2026-06-04", nextContact: "2026-06-15", updatedAt: "5d",   createdAt: "2026-04-22T00:00:00Z", contactPerson: "Charles Whitchurch" },
+  // ── Ecuador ────────────────────────────────────────────────────────────────
+  { id: "mock-027", name: "Dist. El Maestro Ecuador",         country: "Ecuador",                   status: "contacto efectivo",seller: "Omar",         vendorIds: [], category: "Papelería & Útiles",        lastContact: "2026-06-10", nextContact: "2026-06-17", updatedAt: "hoy",  createdAt: "2026-06-10T00:00:00Z", contactPerson: "Sofía Andrade" },
+  { id: "mock-028", name: "Farmacia Medicity Ecuador",        country: "Ecuador",                   status: "sin acción",       seller: "Omar",         vendorIds: [], category: "Farmacia & Salud",           lastContact: "2026-05-29", nextContact: "2026-06-13", updatedAt: "1sem", createdAt: "2026-05-10T00:00:00Z", contactPerson: "Luis Espinoza" },
+  // ── El Salvador ────────────────────────────────────────────────────────────
+  { id: "mock-029", name: "Almacén El Mercado SV",            country: "El Salvador",               status: "propuesta enviada",seller: "Omar",         vendorIds: [], category: "Almacén General",            lastContact: "2026-06-11", nextContact: "2026-06-18", updatedAt: "hoy",  createdAt: "2026-06-11T00:00:00Z", contactPerson: "Héctor Guzmán" },
+  { id: "mock-030", name: "Librería Don Bosco ES",            country: "El Salvador",               status: "sin acción",       seller: "Omar",         vendorIds: [], category: "Librería & Editorial",       lastContact: "2026-06-02", nextContact: "2026-06-14", updatedAt: "1sem", createdAt: "2026-05-15T00:00:00Z", contactPerson: "Carmen Villalta" },
+  // ── Guatemala ──────────────────────────────────────────────────────────────
+  { id: "mock-031", name: "Dist. Guatemalteca de Papelería",  country: "Guatemala",                 status: "contacto efectivo",seller: "Omar",         vendorIds: [], category: "Papelería & Útiles",        lastContact: "2026-06-09", nextContact: "2026-06-16", updatedAt: "hoy",  createdAt: "2026-06-09T00:00:00Z", contactPerson: "Andrea Fuentes" },
+  { id: "mock-032", name: "Juguetería La Ilusión GT",         country: "Guatemala",                 status: "sin acción",       seller: "Omar",         vendorIds: [], category: "Juguetería & Entretenimiento",lastContact: "2026-06-04", nextContact: "2026-06-13", updatedAt: "5d",   createdAt: "2026-05-28T00:00:00Z", contactPerson: "Fernando Castillo" },
+  // ── Guyana ─────────────────────────────────────────────────────────────────
+  { id: "mock-033", name: "Giftland Superstore Guyana",       country: "Guyana",                    status: "propuesta enviada",seller: "Omar",         vendorIds: [], category: "Almacén General",            lastContact: "2026-06-03", nextContact: "2026-06-14", updatedAt: "6d",   createdAt: "2026-05-10T00:00:00Z", contactPerson: "Ramona Singh" },
+  { id: "mock-034", name: "Austin's Book Services GY",        country: "Guyana",                    status: "sin acción",       seller: "Omar",         vendorIds: [], category: "Librería & Editorial",       lastContact: "2026-05-19", nextContact: "2026-06-12", updatedAt: "3sem", createdAt: "2026-04-28T00:00:00Z", contactPerson: "Patrick Fernandes" },
+  // ── Haití ──────────────────────────────────────────────────────────────────
+  { id: "mock-035", name: "Librairie La Pléiade Haïti",       country: "Haití",                     status: "sin acción",       seller: "Daniel",       vendorIds: [], category: "Librería & Editorial",       lastContact: "2026-05-12", nextContact: "2026-06-10", updatedAt: "1mes", createdAt: "2026-04-10T00:00:00Z", contactPerson: "Jean-Paul Moise" },
+  { id: "mock-036", name: "Pharmed Distribution Haïti",       country: "Haití",                     status: "propuesta enviada",seller: "Daniel",       vendorIds: [], category: "Farmacia & Salud",           lastContact: "2026-06-01", nextContact: "2026-06-15", updatedAt: "1sem", createdAt: "2026-05-05T00:00:00Z", contactPerson: "Marie Flore Joseph" },
+  // ── Honduras ───────────────────────────────────────────────────────────────
+  { id: "mock-037", name: "Librería El Hogar Hondureño",      country: "Honduras",                  status: "propuesta enviada",seller: "John",         vendorIds: [], category: "Librería & Editorial",       lastContact: "2026-06-12", nextContact: "2026-06-19", updatedAt: "hoy",  createdAt: "2026-06-12T00:00:00Z", contactPerson: "Claudia Reyes" },
+  { id: "mock-038", name: "Supermercado La Colonia HN",       country: "Honduras",                  status: "contacto efectivo",seller: "John",         vendorIds: [], category: "Supermercado",               lastContact: "2026-06-09", nextContact: "2026-06-17", updatedAt: "hoy",  createdAt: "2026-05-18T00:00:00Z", contactPerson: "David Molina" },
+  // ── Islas Caimán ───────────────────────────────────────────────────────────
+  { id: "mock-039", name: "Cayman Book Nook Ltd",             country: "Islas Caimán",              status: "contacto efectivo",seller: "Daniel",       vendorIds: [], category: "Librería & Editorial",       lastContact: "2026-06-08", nextContact: "2026-06-15", updatedAt: "ayer", createdAt: "2026-05-08T00:00:00Z", contactPerson: "Amanda Foster" },
+  { id: "mock-040", name: "Island Pharmacy Cayman",           country: "Islas Caimán",              status: "sin acción",       seller: "Daniel",       vendorIds: [], category: "Farmacia & Salud",           lastContact: "2026-05-20", nextContact: "2026-06-11", updatedAt: "3sem", createdAt: "2026-04-28T00:00:00Z", contactPerson: "Brian Hurley" },
+  // ── Islas Turcos y Caicos ──────────────────────────────────────────────────
+  { id: "mock-041", name: "TCI School Supplies",              country: "Islas Turcos y Caicos",     status: "propuesta enviada",seller: "Daniel",       vendorIds: [], category: "Papelería & Útiles",        lastContact: "2026-06-08", nextContact: "2026-06-16", updatedAt: "ayer", createdAt: "2026-05-14T00:00:00Z", contactPerson: "James Graceway" },
+  { id: "mock-042", name: "Grand Turk Pharmacy",              country: "Islas Turcos y Caicos",     status: "sin acción",       seller: "Daniel",       vendorIds: [], category: "Farmacia & Salud",           lastContact: "2026-05-25", nextContact: "2026-06-12", updatedAt: "2sem", createdAt: "2026-05-01T00:00:00Z", contactPerson: "Tamara Williams" },
+  // ── Islas Vírgenes Americanas ──────────────────────────────────────────────
+  { id: "mock-043", name: "VI Stationery & Office Supply",    country: "Islas Vírgenes Americanas", status: "sin acción",       seller: "Daniel",       vendorIds: [], category: "Papelería & Útiles",        lastContact: "2026-06-03", nextContact: "2026-06-14", updatedAt: "6d",   createdAt: "2026-05-12T00:00:00Z", contactPerson: "Patricia Moore" },
+  { id: "mock-044", name: "Crown Bay Pharmacy USVI",          country: "Islas Vírgenes Americanas", status: "contacto efectivo",seller: "Daniel",       vendorIds: [], category: "Farmacia & Salud",           lastContact: "2026-06-08", nextContact: "2026-06-16", updatedAt: "ayer", createdAt: "2026-04-30T00:00:00Z", contactPerson: "Robert Sprauve" },
+  // ── Islas Vírgenes Británicas ──────────────────────────────────────────────
+  { id: "mock-045", name: "BVI Bookstore Ltd",                country: "Islas Vírgenes Británicas", status: "propuesta enviada",seller: "Daniel",       vendorIds: [], category: "Librería & Editorial",       lastContact: "2026-06-07", nextContact: "2026-06-15", updatedAt: "2d",   createdAt: "2026-05-20T00:00:00Z", contactPerson: "Lisa Penn" },
+  { id: "mock-046", name: "Road Town Pharmacy BVI",           country: "Islas Vírgenes Británicas", status: "sin acción",       seller: "Daniel",       vendorIds: [], category: "Farmacia & Salud",           lastContact: "2026-05-22", nextContact: "2026-06-12", updatedAt: "2sem", createdAt: "2026-05-05T00:00:00Z", contactPerson: "Dennis Cary" },
+  // ── Jamaica ────────────────────────────────────────────────────────────────
+  { id: "mock-047", name: "Kingston Bookshop Jamaica",        country: "Jamaica",                   status: "contacto efectivo",seller: "Daniel",       vendorIds: [], category: "Librería & Editorial",       lastContact: "2026-06-10", nextContact: "2026-06-17", updatedAt: "hoy",  createdAt: "2026-06-10T00:00:00Z", contactPerson: "Sandra Clarke" },
+  { id: "mock-048", name: "Caribbean Toy Distributors JM",    country: "Jamaica",                   status: "sin acción",       seller: "Daniel",       vendorIds: [], category: "Juguetería & Entretenimiento",lastContact: "2026-05-22", nextContact: "2026-06-12", updatedAt: "2sem", createdAt: "2026-05-05T00:00:00Z", contactPerson: "Wayne Thompson" },
+  // ── Martinica ──────────────────────────────────────────────────────────────
+  { id: "mock-049", name: "Librairie Antillaise Martinique",  country: "Martinica",                 status: "sin acción",       seller: "Daniel",       vendorIds: [], category: "Librería & Editorial",       lastContact: "2026-05-15", nextContact: "2026-06-11", updatedAt: "3sem", createdAt: "2026-05-10T00:00:00Z", contactPerson: "Sophie Beaumont" },
+  { id: "mock-050", name: "Jouets Tropicaux Martinique",      country: "Martinica",                 status: "propuesta enviada",seller: "Daniel",       vendorIds: [], category: "Juguetería & Entretenimiento",lastContact: "2026-06-05", nextContact: "2026-06-14", updatedAt: "4d",   createdAt: "2026-04-25T00:00:00Z", contactPerson: "François Lemaire" },
+  // ── México ─────────────────────────────────────────────────────────────────
+  { id: "mock-051", name: "DISMEX Distribuidora Papelería MX",country: "México",                    status: "contacto efectivo",seller: "Joaquin",      vendorIds: [], category: "Papelería & Útiles",        lastContact: "2026-06-11", nextContact: "2026-06-18", updatedAt: "hoy",  createdAt: "2026-06-11T00:00:00Z", contactPerson: "Alejandra Torres" },
+  { id: "mock-052", name: "Juguetería El Palacio del Niño MX",country: "México",                    status: "sin acción",       seller: "Joaquin",      vendorIds: [], category: "Juguetería & Entretenimiento",lastContact: "2026-06-04", nextContact: "2026-06-13", updatedAt: "5d",   createdAt: "2026-05-08T00:00:00Z", contactPerson: "Roberto Chedraui" },
+  // ── Nicaragua ──────────────────────────────────────────────────────────────
+  { id: "mock-053", name: "Almacén El Éxito Nicaragua",       country: "Nicaragua",                 status: "propuesta enviada",seller: "John",         vendorIds: [], category: "Almacén General",            lastContact: "2026-06-09", nextContact: "2026-06-16", updatedAt: "hoy",  createdAt: "2026-06-09T00:00:00Z", contactPerson: "Martha Espinoza" },
+  { id: "mock-054", name: "Farmacia Vida Nicaragua",          country: "Nicaragua",                 status: "sin acción",       seller: "John",         vendorIds: [], category: "Farmacia & Salud",           lastContact: "2026-05-25", nextContact: "2026-06-12", updatedAt: "2sem", createdAt: "2026-05-05T00:00:00Z", contactPerson: "Carlos Gutiérrez" },
+  // ── Panamá ─────────────────────────────────────────────────────────────────
+  { id: "mock-055", name: "Dist. Istmeña de Papelería PA",    country: "Panamá",                    status: "contacto efectivo",seller: "John",         vendorIds: [], category: "Papelería & Útiles",        lastContact: "2026-06-12", nextContact: "2026-06-19", updatedAt: "hoy",  createdAt: "2026-06-12T00:00:00Z", contactPerson: "Roberto Díaz" },
+  { id: "mock-056", name: "Juguetería Fantasía Panamá",       country: "Panamá",                    status: "propuesta enviada",seller: "John",         vendorIds: [], category: "Juguetería & Entretenimiento",lastContact: "2026-06-05", nextContact: "2026-06-15", updatedAt: "4d",   createdAt: "2026-05-10T00:00:00Z", contactPerson: "Mireya Castillo" },
+  // ── Paraguay ───────────────────────────────────────────────────────────────
+  { id: "mock-057", name: "Librería El Libro Paraguayo",      country: "Paraguay",                  status: "sin acción",       seller: "Joaquin",      vendorIds: [], category: "Librería & Editorial",       lastContact: "2026-05-28", nextContact: "2026-06-13", updatedAt: "1sem", createdAt: "2026-05-05T00:00:00Z", contactPerson: "Lorena Benítez" },
+  { id: "mock-058", name: "Farmacia Catedral Paraguay",       country: "Paraguay",                  status: "contacto efectivo",seller: "Joaquin",      vendorIds: [], category: "Farmacia & Salud",           lastContact: "2026-06-07", nextContact: "2026-06-16", updatedAt: "2d",   createdAt: "2026-05-18T00:00:00Z", contactPerson: "Hugo Zacarías" },
+  // ── Perú ───────────────────────────────────────────────────────────────────
+  { id: "mock-059", name: "Dist. Peruana de Útiles Escolares",country: "Perú",                      status: "propuesta enviada",seller: "Omar",         vendorIds: [], category: "Papelería & Útiles",        lastContact: "2026-06-10", nextContact: "2026-06-17", updatedAt: "hoy",  createdAt: "2026-06-10T00:00:00Z", contactPerson: "Mónica Huamán" },
+  { id: "mock-060", name: "Almacén El Sol Perú",              country: "Perú",                      status: "sin acción",       seller: "Omar",         vendorIds: [], category: "Almacén General",            lastContact: "2026-05-26", nextContact: "2026-06-12", updatedAt: "2sem", createdAt: "2026-05-08T00:00:00Z", contactPerson: "César Quispe" },
+  // ── Puerto Rico ────────────────────────────────────────────────────────────
+  { id: "mock-061", name: "Librería La Tertulia PR",          country: "Puerto Rico",               status: "sin acción",       seller: "Joaquin",      vendorIds: [], category: "Librería & Editorial",       lastContact: "2026-06-01", nextContact: "2026-06-13", updatedAt: "1sem", createdAt: "2026-04-15T00:00:00Z", contactPerson: "Carmen Colón" },
+  { id: "mock-062", name: "Farmacia El Yunque PR",            country: "Puerto Rico",               status: "propuesta enviada",seller: "Joaquin",      vendorIds: [], category: "Farmacia & Salud",           lastContact: "2026-06-06", nextContact: "2026-06-14", updatedAt: "3d",   createdAt: "2026-05-12T00:00:00Z", contactPerson: "José Méndez" },
+  // ── República Dominicana ───────────────────────────────────────────────────
+  { id: "mock-063", name: "Dist. Caribeña de Papelería RD",   country: "República Dominicana",      status: "contacto efectivo",seller: "Orlando",      vendorIds: [], category: "Papelería & Útiles",        lastContact: "2026-06-11", nextContact: "2026-06-18", updatedAt: "hoy",  createdAt: "2026-06-11T00:00:00Z", contactPerson: "Ana Reyes" },
+  { id: "mock-064", name: "Juguetería El Niño Dominicano",    country: "República Dominicana",      status: "sin acción",       seller: "Orlando",      vendorIds: [], category: "Juguetería & Entretenimiento",lastContact: "2026-05-24", nextContact: "2026-06-11", updatedAt: "2sem", createdAt: "2026-05-04T00:00:00Z", contactPerson: "Rafael Martínez" },
+  // ── Sint Maarten ───────────────────────────────────────────────────────────
+  { id: "mock-065", name: "Sint Maarten Bookshop SXM",        country: "Sint Maarten",              status: "sin acción",       seller: "Daniel",       vendorIds: [], category: "Librería & Editorial",       lastContact: "2026-05-20", nextContact: "2026-06-11", updatedAt: "3sem", createdAt: "2026-05-14T00:00:00Z", contactPerson: "Isabelle Gijsbertha" },
+  { id: "mock-066", name: "Island Toy Store SXM",             country: "Sint Maarten",              status: "contacto efectivo",seller: "Daniel",       vendorIds: [], category: "Juguetería & Entretenimiento",lastContact: "2026-06-09", nextContact: "2026-06-17", updatedAt: "hoy",  createdAt: "2026-04-30T00:00:00Z", contactPerson: "Anthony Richardson" },
+  // ── Trinidad y Tobago ──────────────────────────────────────────────────────
+  { id: "mock-067", name: "T&T Stationery & Books",           country: "Trinidad y Tobago",         status: "contacto efectivo",seller: "Daniel",       vendorIds: [], category: "Papelería & Útiles",        lastContact: "2026-06-09", nextContact: "2026-06-16", updatedAt: "hoy",  createdAt: "2026-06-09T00:00:00Z", contactPerson: "Keisha Ramkissoon" },
+  { id: "mock-068", name: "Drugs for Less Trinidad",          country: "Trinidad y Tobago",         status: "propuesta enviada",seller: "Daniel",       vendorIds: [], category: "Farmacia & Salud",           lastContact: "2026-06-05", nextContact: "2026-06-14", updatedAt: "4d",   createdAt: "2026-05-08T00:00:00Z", contactPerson: "Diane Alexander" },
+  // ── Uruguay ────────────────────────────────────────────────────────────────
+  { id: "mock-069", name: "Librería Puro Verso Uruguay",      country: "Uruguay",                   status: "propuesta enviada",seller: "Orlando",      vendorIds: [], category: "Librería & Editorial",       lastContact: "2026-06-12", nextContact: "2026-06-19", updatedAt: "hoy",  createdAt: "2026-06-12T00:00:00Z", contactPerson: "Gabriela Núñez" },
+  { id: "mock-070", name: "Almacén El Mercado Uruguay",       country: "Uruguay",                   status: "sin acción",       seller: "Orlando",      vendorIds: [], category: "Almacén General",            lastContact: "2026-05-20", nextContact: "2026-06-13", updatedAt: "3sem", createdAt: "2026-04-22T00:00:00Z", contactPerson: "Marcelo Da Silva" },
+  // ── Venezuela ──────────────────────────────────────────────────────────────
+  { id: "mock-071", name: "Dist. Venezolana de Papelería",    country: "Venezuela",                 status: "contacto efectivo",seller: "Joaquin",      vendorIds: [], category: "Papelería & Útiles",        lastContact: "2026-06-10", nextContact: "2026-06-17", updatedAt: "hoy",  createdAt: "2026-06-10T00:00:00Z", contactPerson: "María Fernanda Blanco" },
+  { id: "mock-072", name: "Farmacia Central Venezuela",       country: "Venezuela",                 status: "sin acción",       seller: "Joaquin",      vendorIds: [], category: "Farmacia & Salud",           lastContact: "2026-05-22", nextContact: "2026-06-12", updatedAt: "2sem", createdAt: "2026-05-05T00:00:00Z", contactPerson: "Carlos Rodríguez" },
 ];
 
 export const MOCK_DEALS: Deal[] = [

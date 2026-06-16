@@ -1,23 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import {
   ArrowLeft, Sparkles, CheckCircle, Plus, Globe, Tag,
   MessageCircle, Mail, Calendar, Users,
 } from "lucide-react";
 import type { SuggestedProspect } from "@/lib/mock-data";
-
-const FLAG: Record<string, string> = {
-  Guatemala:    "🇬🇹",
-  Honduras:     "🇭🇳",
-  "El Salvador":"🇸🇻",
-  Nicaragua:    "🇳🇮",
-  "Costa Rica": "🇨🇷",
-  Panamá:       "🇵🇦",
-  Jamaica:      "🇯🇲",
-  Barbados:     "🇧🇧",
-  Trinidad:     "🇹🇹",
-};
+import { COUNTRY_FLAG } from "@/lib/countries";
 
 const CAT_COLOR: Record<string, string> = {
   "Snacks & Confitería":        "bg-amber-500/15 text-amber-300",
@@ -62,9 +52,9 @@ export default function NuevosClient({
     <div className="min-h-screen bg-slate-950">
       {/* Header */}
       <header className="border-b border-slate-800 px-6 py-4 flex items-center gap-4">
-        <a href="/dashboard/prospeccion" className="text-slate-400 hover:text-white transition-colors">
+        <Link href="/dashboard/prospeccion" className="text-slate-400 hover:text-white transition-colors">
           <ArrowLeft className="w-5 h-5" />
-        </a>
+        </Link>
         <div className="flex items-center gap-2">
           <div className="w-7 h-7 rounded-lg bg-violet-500/15 flex items-center justify-center">
             <Sparkles className="w-4 h-4 text-violet-400" />
@@ -139,7 +129,7 @@ export default function NuevosClient({
                 <div className="flex items-start gap-4">
                   {/* Emoji país */}
                   <div className="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-xl flex-shrink-0 mt-0.5">
-                    {FLAG[p.country] ?? "🌍"}
+                    {COUNTRY_FLAG[p.country] ?? "🌍"}
                   </div>
 
                   <div className="flex-1 min-w-0">

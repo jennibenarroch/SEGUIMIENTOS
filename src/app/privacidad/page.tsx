@@ -1,14 +1,57 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import LegalLayout from "@/components/legal/LegalLayout";
 
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://salesai.sicobenediciones.com";
+
 export const metadata: Metadata = {
-  title: "Política de Privacidad · SalesAI",
-  description: "Cómo Sicoben Ediciones trata los datos personales gestionados a través de SalesAI.",
+  title: "Política de Privacidad",
+  description:
+    "Cómo Sicoben Ediciones trata los datos personales en SalesAI: qué datos recogemos, base legal, derechos y plazos de conservación.",
+  alternates: { canonical: `${APP_URL}/privacidad` },
+  openGraph: {
+    type: "website",
+    url: `${APP_URL}/privacidad`,
+    siteName: "SalesAI",
+    locale: "es_PA",
+    title: "Política de Privacidad · SalesAI",
+    description:
+      "Cómo Sicoben Ediciones trata los datos personales gestionados a través de SalesAI.",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "SalesAI" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Política de Privacidad · SalesAI",
+    description: "Cómo Sicoben Ediciones trata los datos personales en SalesAI.",
+    images: ["/opengraph-image"],
+  },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": `${APP_URL}/privacidad`,
+  name: "Política de Privacidad · SalesAI",
+  description:
+    "Cómo Sicoben Ediciones trata los datos personales gestionados a través de SalesAI.",
+  url: `${APP_URL}/privacidad`,
+  inLanguage: "es",
+  dateModified: "2026-06-10",
+  publisher: {
+    "@type": "Organization",
+    name: "Sicoben Ediciones",
+    email: "jenni.benarroch@sicobenediciones.com",
+  },
+  isPartOf: { "@id": `${APP_URL}/#webapp` },
 };
 
 export default function PrivacidadPage() {
   return (
-    <LegalLayout
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <LegalLayout
       title="Política de Privacidad"
       updatedAt="10 de junio de 2026"
       otherLinks={[
@@ -179,5 +222,6 @@ export default function PrivacidadPage() {
         con anticipación razonable.
       </p>
     </LegalLayout>
+    </>
   );
 }

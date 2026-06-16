@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { mondayQuery } from "@/lib/monday";
+import { safeError } from "@/lib/api-error";
 
 const POST_UPDATE = `
   mutation PostUpdate($itemId: ID!, $body: String!) {
@@ -43,10 +44,14 @@ export async function POST(req: Request) {
         .map((line) => (line.trim() ? `<p style="margin:0 0 12px;">${line}</p>` : "<br>"))
         .join("");
 
+      const ccList = [...new Set(
+        [process.env.SUPERVISOR_EMAIL, process.env.MANAGER_EMAIL].filter(Boolean) as string[]
+      )];
+
       const { error } = await resend.emails.send({
         from: "onboarding@resend.dev",
         to: emailTo,
-        cc: ["jenni.benarroch@sicobenediciones.com"],
+        ...(ccList.length > 0 ? { cc: ccList } : {}),
         subject,
         html: `<div style="font-family:Arial,sans-serif;max-width:600px;line-height:1.6;color:#222;">${htmlBody}</div>`,
       });
@@ -79,7 +84,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: true, dealName, channel });
   } catch (err) {
     return NextResponse.json(
-      { error: err instanceof Error ? err.message : "Error desconocido" },
+      { error: safeError(err) },
       { status: 500 },
     );
   }
